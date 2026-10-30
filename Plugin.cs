@@ -10,7 +10,12 @@ using UnityEngine.Networking;
 
 namespace ErenshorNpcVoice
 {
-    [BepInPlugin("com.example.erenshornpcvoice", "Erenshor NPC Voice", "0.1.0")]
+    internal static class PluginIdentity
+    {
+        internal const string Guid =
+            "com.github.Jhenox.erenshornpcvoice";
+    }
+    [BepInPlugin(PluginIdentity.Guid, "Erenshor NPC Voice", "0.1.0")]
     public class Plugin : BaseUnityPlugin
     {
         private static AudioClip OriginalHailSound;
@@ -118,7 +123,7 @@ namespace ErenshorNpcVoice
 
             LoadGenderOverrides();
 
-            Harmony harmony = new Harmony("com.example.erenshornpcvoice");
+            Harmony harmony = new Harmony(PluginIdentity.Guid);
             harmony.PatchAll();
 
             StartCoroutine(LoadVoiceProfiles());
@@ -307,8 +312,14 @@ namespace ErenshorNpcVoice
 
         internal static void PlayNpcVoice(NPC npc)
         {
-            if (npc == null || VoiceProfiles.Count == 0)
+            if (npc == null)
             {
+                return;
+            }
+
+            if (VoiceProfiles.Count == 0)
+            {
+                PlayOriginalHailSound();
                 return;
             }
 
@@ -325,17 +336,7 @@ namespace ErenshorNpcVoice
             if (gender == VoiceGender.Unknown)
             {
                 LogUnknownGender(npc, appearanceNames);
-
-                if (OriginalHailSound != null && GameData.PlayerAud != null)
-                {
-                    GameData.PlayerAud.PlayOneShot(
-                        OriginalHailSound,
-                        GameData.PlayerAud.volume *
-                        0.5f *
-                        GameData.SFXVol *
-                        GameData.MasterVol);
-                }
-
+                PlayOriginalHailSound();
                 return;
             }
 
@@ -389,7 +390,7 @@ namespace ErenshorNpcVoice
 
                 voice.Source.PlayOneShot(
                     clip,
-                    GameData.SFXVol * GameData.MasterVol * 0.25f);
+                    GameData.SFXVol * GameData.MasterVol * 0.15f);
             }
         }
 
@@ -807,6 +808,21 @@ namespace ErenshorNpcVoice
 
                 return (int)(hash & 0x7fffffff);
             }
+        }
+
+        private static void PlayOriginalHailSound()
+        {
+            if (OriginalHailSound == null || GameData.PlayerAud == null)
+            {
+                return;
+            }
+
+            GameData.PlayerAud.PlayOneShot(
+                OriginalHailSound,
+                GameData.PlayerAud.volume *
+                0.5f *
+                GameData.SFXVol *
+                GameData.MasterVol);
         }
     }
 
