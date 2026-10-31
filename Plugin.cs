@@ -15,7 +15,7 @@ namespace ErenshorNpcVoice
         internal const string Guid =
             "com.github.Jhenox.erenshornpcvoice";
     }
-    [BepInPlugin(PluginIdentity.Guid, "Erenshor NPC Voice", "0.1.0")]
+    [BepInPlugin(PluginIdentity.Guid, "Erenshor NPC Voice", "0.1.2")]
     public class Plugin : BaseUnityPlugin
     {
         private static AudioClip OriginalHailSound;
@@ -92,7 +92,7 @@ namespace ErenshorNpcVoice
         {
             get
             {
-                return Path.Combine(Paths.PluginPath, "ErenshorNpcVoice");
+                return Path.GetDirectoryName(typeof(Plugin).Assembly.Location);
             }
         }
 
