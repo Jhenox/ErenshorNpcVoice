@@ -1,1 +1,9 @@
-
+{
+  "name": "ErenshorNpcVoice",
+  "version_number": "0.1.2",
+  "website_url": "https://github.com/Jhenox/ErenshorNpcVoice",
+  "description": "Adds varied voice cues to NPC and SimPlayer hails and selected keyword responses.",
+  "dependencies": [
+    "BepInEx-BepInExPack-5.4.2305"
+  ]
+}
