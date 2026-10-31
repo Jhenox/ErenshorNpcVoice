@@ -4,6 +4,3 @@
 .vs/
 *.user
 *.suo
-
-# Keep voice clips out of the source repository
-*.mp3
