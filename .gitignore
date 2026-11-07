@@ -1,6 +1,25 @@
-# .NET build output
+# Visual Studio
+.vs/
 [Bb]in/
 [Oo]bj/
-.vs/
 *.user
 *.suo
+
+# NuGet packages
+packages/
+
+# Build output directories
+[Dd]ebug/
+**/[Rr]elease/
+
+# Keep the distributable mod files
+!/release/
+!/release/**
+
+# Temporary files
+*.tmp
+*.bak
+
+# Windows
+Thumbs.db
+Desktop.ini
